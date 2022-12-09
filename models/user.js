@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       })
 
-      // User.hasMany(models.PlayDice, {
-      //   foreignKey: 'user_id'
-      // })
+      User.hasMany(models.PlayDice, {
+        foreignKey: 'user_id'
+      })
     }
   }
   User.init(

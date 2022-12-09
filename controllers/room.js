@@ -1,4 +1,4 @@
-const { Room } = require('../models')
+const { Room, PlayDice } = require('../models')
 const responseData = require('../responses/data')
 class RoomController {
   static async createRoom (req, res, next) {
@@ -29,7 +29,9 @@ class RoomController {
   static async getRoom (req, res, next) {
     try {
       const { id } = req.params
-      const room = await Room.findByPk(id)
+      const room = await Room.findByPk(id, {
+        include: PlayDice
+      })
 
       if (room) {
         responseData(res, 200, 'Get Room', room)

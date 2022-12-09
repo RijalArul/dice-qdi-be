@@ -5,6 +5,7 @@ const { errorHandler } = require('../middlewares/error_handler')
 
 router.use(checkAuthentication)
 router.post('/:roomId', PlayDice.create)
+router.put('/:roomId', PlayDice.result)
 router.use(errorHandler)
 
 module.exports = router

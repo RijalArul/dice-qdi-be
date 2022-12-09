@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: true
+          notEmpty: true,
+          min: {
+            args: [0],
+            message: 'Jatah dadu anda habis'
+          }
         }
       },
       rest_of_turn: {
