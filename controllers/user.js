@@ -1,9 +1,16 @@
+const { User } = require('../models')
+const responseUser = require('../responses/user')
 class UserController {
-  static async register (req, res) {
+  static async register (req, res, next) {
     try {
-      res.send('MASUK')
+      const { username, password } = req.body
+      const newUser = await User.create({
+        username: username,
+        password: password
+      })
+      responseUser(res, 200, 'Success Register', newUser)
     } catch (err) {
-      res.send(err)
+      next(err)
     }
   }
 
