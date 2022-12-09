@@ -5,7 +5,7 @@ class RoomController {
     try {
       const { max_player, total_shake } = req.body
       const newRoom = await Room.create({
-        current_player: 1,
+        current_player: 0,
         max_player,
         total_shake,
         user_id: req.userData.id
