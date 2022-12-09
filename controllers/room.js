@@ -3,10 +3,11 @@ const responseData = require('../responses/data')
 class RoomController {
   static async createRoom (req, res, next) {
     try {
-      const { max_player } = req.body
+      const { max_player, total_shake } = req.body
       const newRoom = await Room.create({
         current_player: 1,
-        max_player: parseInt(max_player, 10, 32),
+        max_player,
+        total_shake,
         user_id: req.userData.id
       })
       responseData(res, 201, 'Success Create Room', newRoom)

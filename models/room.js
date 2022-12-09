@@ -9,33 +9,36 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      Room.hasMany(models.PlayDice, {
-        foreignKey: 'room_id'
-      })
     }
   }
   Room.init(
     {
-      current_player: {
+      user_id: DataTypes.INTEGER,
+      total_shake: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0
+        validate: {
+          notEmpty: true
+        }
       },
       max_player: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: true,
-          min: 1,
-          max: 4
+          notEmpty: true
         }
       },
-      user_id: DataTypes.INTEGER
+      current_player: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
+      }
     },
     {
       sequelize,
-      modelName: 'Room',
-      underscored: true
+      modelName: 'Room'
     }
   )
   return Room
