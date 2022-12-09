@@ -2,7 +2,7 @@ const { checkPassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 const { User } = require('../models')
 const user = require('../models/user')
-const responseUser = require('../responses/user')
+const responseData = require('../responses/data')
 class UserController {
   static async register (req, res, next) {
     try {
@@ -16,7 +16,7 @@ class UserController {
         id: newUser.id,
         username: newUser.username
       })
-      responseUser(res, 200, 'Success Register', genToken)
+      responseData(res, 200, 'Success Register', genToken)
     } catch (err) {
       next(err)
     }
@@ -39,7 +39,7 @@ class UserController {
             id: user.id,
             username: user.username
           })
-          responseUser(res, 200, 'Success Login', genToken)
+          responseData(res, 200, 'Success Login', genToken)
         } else {
           throw { name: 'InvalidEmailOrPassword' }
         }
