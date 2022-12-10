@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize')
-const { Room, PlayDice, sequelize } = require('../models')
+const { Room, PlayDice, sequelize, User } = require('../models')
 const responseData = require('../responses/data')
 
 class PlayDiceController {
@@ -39,8 +39,8 @@ class PlayDiceController {
                 returning: true
               }
             )
-            await PlayDice.create(payloadDice)
-            responseData(res, 200, 'Welcome to the group', payloadDice)
+            const createDice = await PlayDice.create(payloadDice)
+            responseData(res, 200, 'Welcome to the group', createDice)
           } else {
             if (room.current_player === room.max_player) {
               if (findDice.rest_of_shake > 0) {
@@ -98,12 +98,13 @@ class PlayDiceController {
                 responseData(res, 201, 'Create Dice', createPlay)
               }
             } else {
-              responseData(
-                res,
-                200,
-                'Waiting Fullfill member',
-                'Waiting Fullfill member'
-              )
+              throw { name: 'NotFullFill', message: 'Waiting fullfill group' }
+              //   responseData(
+              //     res,
+              //     200,
+              //     'Waiting Fullfill member',
+              //     'Waiting Fullfill member'
+              //   )
             }
           }
         }
@@ -111,6 +112,7 @@ class PlayDiceController {
         throw { name: 'IdNotFound', message: 'Room Not Found' }
       }
     } catch (err) {
+      console.log(err)
       next(err)
     }
   }
@@ -148,9 +150,9 @@ class PlayDiceController {
             returning: true
           }
         )
-        const getWinner = await PlayDice.findOne({
+        const getWinner = await User.findOne({
           where: {
-            id: dices[dices.length - 1].id
+            id: dices[dices.length - 1].user_id
           }
         })
         responseData(res, 200, 'Yeeayy Winner', getWinner)

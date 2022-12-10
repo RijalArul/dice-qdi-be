@@ -18,7 +18,7 @@ class RoomController {
 
   static async getRooms (req, res, next) {
     try {
-      const rooms = await Room.findAll()
+      const rooms = await Room.findAll({})
 
       responseData(res, 200, 'Get Rooms', rooms)
     } catch (err) {

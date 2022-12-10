@@ -47,6 +47,7 @@ class UserController {
         throw { name: 'UserNotFound' }
       }
     } catch (err) {
+      console.log(err)
       next(err)
     }
   }

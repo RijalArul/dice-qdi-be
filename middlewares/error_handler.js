@@ -21,6 +21,9 @@ function errorHandler (err, req, res, next) {
   } else if (err.name === 'UserNotFound') {
     code = 404
     message = err.name
+  } else if (err.Name == 'NotFullFill') {
+    code = 405
+    message = err.message
   } else {
     message = 'InternalServerError'
   }
